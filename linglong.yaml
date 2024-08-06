@@ -1,0 +1,32 @@
+version: "1"
+
+package:
+  id: io.github.SerialPortAssistant
+  name: SerialPortAssistant
+  version: 0.0.5.10
+  kind: app
+  description: |
+    This project is a cross-platform serial port assistant. It can run on WINDOWS, linux、android、macos system.
+
+command:
+  - /opt/apps/io.github.SerialPortAssistant/files/bin/SerialPortAssistant
+
+base: org.deepin.foundation/23.0.0
+runtime: org.deepin.Runtime/23.0.1
+
+sources:
+  - kind: git
+    url: https://github.com/KangLin/SerialPortAssistant.git
+    version: v0.5.10
+    commit: 8ee44078301778c18c72009e8d9ffdf9b74451e2
+  - kind: git
+    url: https://github.com/KangLin/RabbitCommon.git
+    version: v1.0.5
+    commit: 11e7e116fb705dc4590ef15406cb7c33ee6e3c82
+
+build: |
+  mv /project/linglong/sources/RabbitCommon.git /project/linglong/sources/RabbitCommon
+  cd /project/linglong/sources/SerialPortAssistant.git
+  qmake -makefile PREFIX=${PREFIX} LIB_INSTALL_DIR=${PREFIX}/lib/${TRIPLET}
+  make
+  make install
